@@ -30,6 +30,12 @@ spec:
                 key: password
           - name: GHOST_DATABASE
             value: ghost
+#          resources:
+#            limits:
+#              memory: 300Mi
+#            requests:
+#              cpu: 100m
+#              memory: 300Mi
           livenessProbe:
             httpGet:
               path: /author/ghost/
