@@ -30,6 +30,20 @@ spec:
                 key: password
           - name: GHOST_DATABASE
             value: ghost
+          livenessProbe:
+            httpGet:
+              path: /author/ghost/
+              port: 2368
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /alive
+              port: 2368
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 15
           #volumeMounts:
           #  - name: ghost-pvc
           #    mountPath: /var/lib/ghost
