@@ -32,6 +32,16 @@ variable "additional_zones" {
 variable "labels" {
     type = "map"
 }
+variable "sql_instance_size" {
+    type = "string"
+    description = "sql instance size (https://cloud.google.com/sql/pricing#2nd-gen-pricing)"
+}
+variable "sql_admin_user" {
+    type = "string"
+}
+variable "sql_admin_pass" {
+    type = "string"
+}
 
 
 
@@ -47,3 +57,10 @@ output "gcp_ssh_command" {
 output "gcp_cluster_name" {
     value = "${google_container_cluster.gcp_kubernetes.name}"
 }
+
+#
+#            CloudSQL outputs
+#
+#output "cloud_sql_link" {
+#    value = "${google_sql_database_instance.master.self_link}"
+#}

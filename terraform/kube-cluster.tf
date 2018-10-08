@@ -3,12 +3,7 @@ resource "google_container_cluster" "gcp_kubernetes" {
   zone               = "${var.zone}"
   initial_node_count = "${var.gcp_cluster_nodes}"
   cluster_ipv4_cidr  = "${var.cluster_ipv4_cidr}"
-
-  additional_zones = "${var.additional_zones}"
-#  [
-#    "us-west1-b",
-#    "us-west1-c",
-#  ]
+  additional_zones   = "${var.additional_zones}"
 
   master_auth {
     username = "${var.linux_admin_username}"

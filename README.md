@@ -20,7 +20,7 @@ use terraform to deploy k8s cluster (3 nodes), cloudSQL (setup firewall)
 - prepare structure of my git kiwi-test
 - create service account terraform in gce with edit perrmission for all (just this time)
 - export key for terraform and prepare connection
-- write terraform plan
+- write and run terraform plan for k8s cluster
 '''
     .
     ├── connections.tf
@@ -29,15 +29,26 @@ use terraform to deploy k8s cluster (3 nodes), cloudSQL (setup firewall)
     ├── terraform.tfvars
     └── variables.tf
 '''
-
-
 Output from GCE k8s
 gcp_cluster_endpoint = 35.242.250.100
 gcp_cluster_name = hr-sirovy
 gcp_ssh_command = ssh marek.sirovy@35.242.250.100
 
 
-- deploy to  k8s ghost blog system, which will use cloudSQL DB
+- load k8s config for kubectl
+''' 
+    gcloud container clusters get-credentials hr-sirovy --zone europe-west3
+'''
+
+- enable cloudSQL api https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=1013002814473
+- write terraform for cloud sql and prepare admin user (didn't find how to set permissions)
+- have k8s cluster and cloudSQL up and running
+
+
+deploy to  k8s ghost blog system, which will use cloudSQL DB
+------------------------------------------------------------
+
+
 
 - think about potential issues in the ghost app deployment, and try to prevent them (e.g. memory leaks, failing processes, etc.)
 
