@@ -15,5 +15,9 @@ labels = {
     Author = "marek.sirovy"
 }
 sql_instance_size = "db-g1-small"
+# testing user
 sql_admin_user = "marek.sirovy"
 sql_admin_pass = "5yhbwil8onklmpo3qlknjd-k"         # Dirty and stupid but don't have backend for this right now
+
+sql_ghost_user = "ghost"
+sql_ghost_pass = "G6d-yubjwkevin4dausklnB!YUKndQ"   # Dirty and stupid but don't have backend for this right now

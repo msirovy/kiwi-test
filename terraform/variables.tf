@@ -44,7 +44,6 @@ variable "sql_admin_pass" {
 }
 
 
-
 #
 #            GCP Outputs
 #

@@ -19,7 +19,13 @@ use terraform to deploy k8s cluster (3 nodes), cloudSQL (setup firewall)
 ------------------------------------------------------------------------
 - prepare structure of my git kiwi-test
 - create service account terraform in gce with edit perrmission for all (just this time)
+'''
+    gcloud iam service-accounts create terraform --display-name "Terraform admin account"
+'''
 - export key for terraform and prepare connection
+'''
+    gcloud iam service-accounts keys create tmp/account.json --iam-account terraform@hr-sirovy.iam.gserviceaccount.com
+'''
 - write and run terraform plan for k8s cluster
 '''
     .
@@ -30,9 +36,9 @@ use terraform to deploy k8s cluster (3 nodes), cloudSQL (setup firewall)
     └── variables.tf
 '''
 Output from GCE k8s
-gcp_cluster_endpoint = 35.242.250.100
+gcp_cluster_endpoint = 35.198.131.40
 gcp_cluster_name = hr-sirovy
-gcp_ssh_command = ssh marek.sirovy@35.242.250.100
+gcp_ssh_command = ssh marek.sirovy@35.198.131.40
 
 
 - load k8s config for kubectl
@@ -44,16 +50,20 @@ gcp_ssh_command = ssh marek.sirovy@35.242.250.100
 - write terraform for cloud sql and prepare admin user (didn't find how to set permissions)
 - have k8s cluster and cloudSQL up and running
 
-
 deploy to  k8s ghost blog system, which will use cloudSQL DB
 ------------------------------------------------------------
+- modify ghost.yml and ghost-service.yml 
+- run for yml in persistant-storage-static.yaml persistant-storage-dynamic.yaml ghost.yaml ghost-service.yaml; do kubect create -f $yml; done
+- now it is accessable by portforward (waiting for IP from gce)
+  kubectl port-forward svc/ghost 2368:2368
+ToDo: Configure ingress and letsencrypt
 
 
 
-- think about potential issues in the ghost app deployment, and try to prevent them (e.g. memory leaks, failing processes, etc.)
+
+ - think about potential issues in the ghost app deployment, and try to prevent them (e.g. memory leaks, failing processes, etc.)
+
 
 - deploy Datadog to k8s cluster (agent on every node) expect more applications to be running on the same node"
 
 - expect Ghost Blog accepts DATATOD_ADDRESS and DATADOG_PORT environment variables, set them so Ghost is eventually able to send metrics there
-
-- write everything in terraform / Dockerfile / manifest / bash files

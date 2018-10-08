@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ghost-deployment
+  labels:
+    name: ghost-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ghost-deployment
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: "ghost:latest"
+          name: "ghost"
+          ports:
+          - containerPort: 2368
+          env:
+          - name: GHOST_USER
+            valueFrom:
+              secretKeyRef:
+                name: clustersql-password
+                key: username
+          - name: GHOST_PASS
+            valueFrom:
+              secretKeyRef:
+                name: clustersql-password
+                key: password
+          - name: GHOST_DATABASE
+            value: ghost
+          #volumeMounts:
+          #  - name: ghost-pvc
+          #    mountPath: /var/lib/ghost
+#          resources:
+#            limits:
+#              cpu: 200m  
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=<INSTANCE_CONNECTION_NAME>=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          # [START cloudsql_security_context]
+          securityContext:
+            runAsUser: 2  # non-root user
+            allowPrivilegeEscalation: false
+          # [END cloudsql_security_context]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true    
+      volumes:
+#        - name: ghost-vol
+#          hostPath:
+#            path: /var/lib/ghost
+        #- name: ghost-pvc
+        #  persistentVolumeClaim:
+        #    claimName: ghost-pv-claim
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
