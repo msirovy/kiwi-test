@@ -39,7 +39,7 @@ spec:
             periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /alive
+              path: /author/ghost/
               port: 2368
             initialDelaySeconds: 5
             timeoutSeconds: 1
