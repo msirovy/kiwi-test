@@ -20,8 +20,21 @@ use terraform to deploy k8s cluster (3 nodes), cloudSQL (setup firewall)
 - prepare structure of my git kiwi-test
 - create service account terraform in gce with edit perrmission for all (just this time)
 - export key for terraform and prepare connection
+- write terraform plan
+'''
+    .
+    ├── connections.tf
+    ├── kube-cluster.tf
+    ├── terraform.tfstate
+    ├── terraform.tfvars
+    └── variables.tf
+'''
 
 
+Output from GCE k8s
+gcp_cluster_endpoint = 35.242.250.100
+gcp_cluster_name = hr-sirovy
+gcp_ssh_command = ssh marek.sirovy@35.242.250.100
 
 
 - deploy to  k8s ghost blog system, which will use cloudSQL DB
